@@ -1,0 +1,11 @@
+{
+  "searches": [
+    {"term": "wireless headphones", "category": "Electronics", "expected_keywords": ["headphones", "headset"]},
+    {"term": "usb-c cable", "category": "Electronics", "expected_keywords": ["usb", "cable"]},
+    {"term": "mechanical keyboard", "category": "Electronics", "expected_keywords": ["keyboard"]}
+  ],
+  "edge_cases": [
+    {"term": "!!!", "description": "non-product punctuation"},
+    {"term": "a", "description": "very short search"}
+  ]
+}

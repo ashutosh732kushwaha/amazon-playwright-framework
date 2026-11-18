@@ -1,0 +1,15 @@
+playwright==1.55.0
+pytest==8.4.2
+pytest-playwright==0.7.1
+pytest-xdist==3.8.0
+pytest-rerunfailures==16.0.1
+pytest-html==4.1.1
+allure-pytest==2.15.0
+pydantic==2.11.7
+pydantic-settings==2.10.1
+python-dotenv==1.1.1
+loguru==0.7.3
+faker==37.6.0
+requests==2.32.5
+PyYAML==6.0.2
+

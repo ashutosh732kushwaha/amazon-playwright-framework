@@ -1,0 +1,19 @@
+production:
+  base_url: https://www.amazon.com
+  locale: en-US
+  timezone: America/New_York
+  viewport: [1440, 900]
+  headless: true
+india:
+  base_url: https://www.amazon.in
+  locale: en-IN
+  timezone: Asia/Kolkata
+  viewport: [1440, 900]
+  headless: true
+staging:
+  base_url: https://www.amazon.com
+  locale: en-US
+  timezone: America/New_York
+  viewport: [1280, 800]
+  headless: true
+

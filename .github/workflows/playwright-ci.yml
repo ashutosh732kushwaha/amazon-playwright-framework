@@ -1,0 +1,36 @@
+name: Amazon Playwright UI/API Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install --with-deps chromium
+      - name: Run tests
+        env:
+          AMAZON_ENV: production
+          AMAZON_HEADLESS: "true"
+        run: |
+          pytest -n 2 --reruns 1 --html=reports/report.html --self-contained-html --alluredir=reports/allure-results
+      - name: Upload Allure and HTML results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            reports/
+          if-no-files-found: warn
