@@ -24,6 +24,8 @@ def test_amazon_search_smoke(page, amazon_settings):
         results = home.search("wireless headphones")
     except BotChallengeDetected:
         pytest.skip("Amazon bot/CAPTCHA interstitial detected")
+    if home.detect_bot_challenge():
+        pytest.skip("Amazon bot/CAPTCHA interstitial detected")
     results.wait_for_results()
     assert results.get_element_count(results.RESULTS) >= 1
 

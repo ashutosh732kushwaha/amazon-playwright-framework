@@ -17,6 +17,8 @@ def test_search_returns_product_cards(page, amazon_settings, search):
         results = home.search(search["term"])
     except BotChallengeDetected:
         pytest.skip("Amazon bot/CAPTCHA interstitial detected")
+    if home.detect_bot_challenge():
+        pytest.skip("Amazon bot/CAPTCHA interstitial detected")
     results.wait_for_results()
     cards = results.get_product_cards(limit=5)
     assert cards
