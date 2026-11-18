@@ -30,4 +30,12 @@ def test_amazon_search_smoke(page, amazon_settings):
 
 @pytest.mark.smoke
 def test_api_base_url_is_reachable(api_helper, amazon_settings):
-    assert api_helper.verify_status(amazon_settings.base_url) is True
+    response = api_helper.get_response(amazon_settings.base_url)
+    challenge_markers = ("captcha", "robot check", "automated access")
+    if response.status_code in {403, 429, 503} and any(
+        marker in response.text.lower() for marker in challenge_markers
+    ):
+        pytest.skip(f"Amazon bot challenge returned HTTP {response.status_code}")
+    assert response.status_code == 200, (
+        f"GET {response.url} returned HTTP {response.status_code}; expected 200"
+    )

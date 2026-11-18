@@ -8,8 +8,11 @@ class ApiHelper:
         self.timeout = timeout
         self.session = requests.Session()
 
+    def get_response(self, url: str) -> requests.Response:
+        return self.session.get(url, timeout=self.timeout)
+
     def get(self, url: str, expected_status: int = 200) -> requests.Response:
-        response = self.session.get(url, timeout=self.timeout)
+        response = self.get_response(url)
         if response.status_code != expected_status:
             raise AssertionError(
                 f"GET {url} returned {response.status_code}; expected {expected_status}"
@@ -18,7 +21,7 @@ class ApiHelper:
 
     def verify_status(self, url: str, expected_status: int = 200) -> bool:
         try:
-            return self.session.get(url, timeout=self.timeout).status_code == expected_status
+            return self.get_response(url).status_code == expected_status
         except requests.RequestException:
             return False
 

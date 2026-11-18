@@ -25,13 +25,18 @@ class SearchResultsPage(BasePage):
 
     def get_product_cards(self, limit: int = 10) -> list[dict[str, Any]]:
         cards = self.result_cards()
-        count = min(cards.count(), limit)
         products: list[dict[str, Any]] = []
-        for index in range(count):
+        for index in range(cards.count()):
+            if len(products) >= limit:
+                break
             card = cards.nth(index)
-            title_locator = card.locator(self.RESULT_TITLE)
-            title = title_locator.inner_text().strip() if title_locator.count() else ""
-            url = title_locator.get_attribute("href") if title_locator.count() else None
+            title_locator = card.locator(self.RESULT_TITLE).first
+            if not title_locator.count():
+                continue
+            title = title_locator.inner_text().strip()
+            if not title:
+                continue
+            url = title_locator.get_attribute("href")
             price_locator = card.locator(self.RESULT_PRICE)
             price = price_locator.first.inner_text().strip() if price_locator.count() else ""
             products.append({"title": title, "url": url, "price": price})
