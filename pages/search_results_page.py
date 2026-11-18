@@ -7,7 +7,7 @@ from pages.base_page import BasePage
 
 class SearchResultsPage(BasePage):
     RESULTS = "[data-component-type='s-search-result']"
-    RESULT_TITLE = "h2 a"
+    RESULT_TITLE = "a:has(h2)"
     RESULT_PRICE = ".a-price .a-offscreen"
     PRIME_FILTER = "li[data-csa-c-slot-id*='prime']"
     SORT_DROPDOWN = "#s-result-sort-select"
@@ -21,7 +21,8 @@ class SearchResultsPage(BasePage):
         return self.page.locator(self.RESULTS)
 
     def wait_for_results(self) -> None:
-        self.wait_for_visible(self.result_cards().first)
+        titles = self.page.locator(f"{self.RESULTS} {self.RESULT_TITLE}")
+        self.wait_for_visible(titles.first)
 
     def get_product_cards(self, limit: int = 10) -> list[dict[str, Any]]:
         cards = self.result_cards()
