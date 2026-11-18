@@ -21,7 +21,7 @@ class SearchResultsPage(BasePage):
         return self.page.locator(self.RESULTS)
 
     def wait_for_results(self) -> None:
-        self.wait_for_visible(self.RESULTS)
+        self.wait_for_visible(self.result_cards().first)
 
     def get_product_cards(self, limit: int = 10) -> list[dict[str, Any]]:
         cards = self.result_cards()
